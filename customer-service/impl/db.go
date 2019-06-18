@@ -50,7 +50,7 @@ func (c *CustomerServiceRepository) AddDriver(ctx context.Context, driver *proto
 
 func (c *CustomerServiceRepository) UpdateDriver(ctx context.Context, driver *proto.Driver) (*proto.Driver,error) {
 	colQuerier := bson.M{"id":driver.Id}
-	change := bson.M{"$set": bson.M{"name":driver.Name,"email":driver.Email,"password":driver.Password,"fleetCompanyId":driver.FleetCompanyId}}
+	change := bson.M{"$set": bson.M{"name":driver.Name,"email":driver.Email,"password":driver.Password,"fleetcompanyid":driver.FleetCompanyId}}
 	if err:=c.driverCollection().Update(colQuerier,change); err !=nil{
 		return nil,err
 	} else {
@@ -67,9 +67,9 @@ func (c *CustomerServiceRepository) GetDriverById(ctx context.Context, driveId s
 	}
 }
 
-func (c *CustomerServiceRepository) GetDriveByFleetCompanyId(ctx context.Context, driverId string) ([]*proto.Driver,error) {
+func (c *CustomerServiceRepository) GetDriversByFleetCompanyId(ctx context.Context, fleetCompanyId string) ([]*proto.Driver,error) {
 	var drivers [] *proto.Driver
-	if err := c.driverCollection().Find(bson.M{"id":driverId}).All(&drivers); err != nil {
+	if err := c.driverCollection().Find(bson.M{"fleetcompanyid":fleetCompanyId}).All(&drivers); err != nil {
 		return nil, err
 	} else {
 		return drivers, nil
@@ -98,9 +98,9 @@ func (c *CustomerServiceRepository) AddCorporation(ctx context.Context, corporat
 	}
 }
 
-func (c *CustomerServiceRepository) GetAllCorporationsByFleetCompanyId(ctx context.Context, fleetcompanyId string) ([] *proto.Corporation, error) {
+func (c *CustomerServiceRepository) GetAllCorporationsByFleetCompanyId(ctx context.Context, fleetCompanyId string) ([] *proto.Corporation, error) {
 	var corporations [] *proto.Corporation
-	if err := c.corporationCollection().Find(bson.M{"id":fleetcompanyId}).All(&corporations); err != nil{
+	if err := c.corporationCollection().Find(bson.M{"fleetcompanyid":fleetCompanyId}).All(&corporations); err != nil{
 		return nil, err
 	} else {
 		return corporations, nil
@@ -139,7 +139,7 @@ func (c *CustomerServiceRepository) AddRegion(ctx context.Context, region *proto
 
 func (c *CustomerServiceRepository) GetAllRegionsByCorporationId(ctx context.Context, corporationId string) ([] *proto.Region, error) {
 	var regions [] *proto.Region
-	if err := c.RegionCollection().Find(bson.M{"id":corporationId}).All(&regions); err != nil{
+	if err := c.RegionCollection().Find(bson.M{"corporationid":corporationId}).All(&regions); err != nil{
 		return nil, err
 	} else {
 		return regions, nil
@@ -172,7 +172,7 @@ func (c *CustomerServiceRepository) DistrictCollecion() *mgo.Collection {
 
 func (c *CustomerServiceRepository) GetAllDistrictByRegionId(ctx context.Context, regionId string) ([] *proto.District, error) {
 	var districts [] *proto.District
-	if err := c.DistrictCollecion().Find(bson.M{"id":regionId}).All(&districts); err != nil{
+	if err := c.DistrictCollecion().Find(bson.M{"regionid":regionId}).All(&districts); err != nil{
 		return nil,err
 	} else {
 		return districts, nil
@@ -205,7 +205,7 @@ func (c *CustomerServiceRepository) LocationCollecion() *mgo.Collection {
 
 func (c *CustomerServiceRepository) GetAllLocationsByDistrictId(ctx context.Context, districtId string) ([] *proto.Location, error) {
 	var locations [] *proto.Location
-	if err := c.LocationCollecion().Find(bson.M{"id":districtId}).All(&locations); err != nil{
+	if err := c.LocationCollecion().Find(bson.M{"districtid":districtId}).All(&locations); err != nil{
 		return nil,err
 	} else {
 		return locations, nil

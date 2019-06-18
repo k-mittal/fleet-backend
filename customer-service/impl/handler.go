@@ -47,7 +47,7 @@ func (h Handler) GetDriverById(ctx context.Context, req *proto2.IdRequest, res *
 }
 
 func (h Handler) GetDriversByFleetCompanyId(ctx context.Context, req *proto2.IdRequest, res *proto.DriversResponse) error{
-	if drivers , err:= h.Service.GetDriverByFleetCompanyId(ctx,req.Id); err!=nil {
+	if drivers , err:= h.Service.GetDriversByFleetCompanyId(ctx,req.Id); err!=nil {
 		return err
 	} else {
 		res.Drivers = drivers

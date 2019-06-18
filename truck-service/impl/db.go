@@ -44,7 +44,7 @@ func (c *TruckServiceRepository) truckCollection() *mgo.Collection {
 
 func (c *TruckServiceRepository) UpdateTruck(ctx context.Context, truck *proto.Truck) (*proto.Truck, error) {
 	colQurier := bson.M{"id":truck.Id}
-	change := bson.M{"$set":bson.M{"licensePlate":truck.LicensePlate,"clockedInUser":truck.ClockedInUser,"miles":truck.Miles,"fleetCompanyId":truck.FleetCompanyId,"corporationId":truck.CorporationId,"regionId":truck.RegionId,"districtId":truck.DistrictId,"locationId":truck.LocationId}}
+	change := bson.M{"$set":bson.M{"licenseplate":truck.LicensePlate,"clockedinuser":truck.ClockedInUser,"miles":truck.Miles,"fleetcompanyid":truck.FleetCompanyId,"corporationid":truck.CorporationId,"regionid":truck.RegionId,"districtid":truck.DistrictId,"locationid":truck.LocationId}}
 	if err := c.truckCollection().Update(colQurier,change); err != nil{
 		return nil,err
 	} else {
@@ -63,7 +63,7 @@ func (c *TruckServiceRepository) GetTruckById(ctx context.Context, truckId strin
 
 func (c *TruckServiceRepository) GetAllTrucksByFleetCompanyId(ctx context.Context, fleetCompanyId string) ([] *proto.Truck, error) {
 	var trucks [] *proto.Truck
-	if err := c.truckCollection().Find(bson.M{"id":fleetCompanyId}).All(&trucks); err !=nil{
+	if err := c.truckCollection().Find(bson.M{"fleetcompanyid":fleetCompanyId}).All(&trucks); err !=nil{
 		return nil, err
 	} else {
 		return trucks, nil

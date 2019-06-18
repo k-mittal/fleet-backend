@@ -68,8 +68,8 @@ func (s Service) GetDriverById(ctx context.Context, driverId string) (*proto.Dri
 	}
 }
 
-func (s Service) GetDriverByFleetCompanyId(ctx context.Context, fleetcompanyId string) ([] *proto.Driver,error){
-	if drivers, err :=s.Repository.GetDriveByFleetCompanyId(ctx,fleetcompanyId); err!=nil{
+func (s Service) GetDriversByFleetCompanyId(ctx context.Context, fleetcompanyId string) ([] *proto.Driver,error){
+	if drivers, err :=s.Repository.GetDriversByFleetCompanyId(ctx,fleetcompanyId); err!=nil{
 		return nil,err
 	} else {
 		return drivers,nil
